@@ -63,6 +63,66 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- SNSシェアボタンの初期化 ---
+    initializeShareButtons();
+
+    function initializeShareButtons() {
+        const cards = document.querySelectorAll('.card');
+
+        cards.forEach((card, index) => {
+            // IDがなければ自動付与 (リンク用)
+            if (!card.id) {
+                card.id = `prompt-${index + 1}`;
+            }
+
+            const title = card.querySelector('.card-title').textContent;
+            const url = `${window.location.origin}${window.location.pathname}#${card.id}`;
+            const encodedTitle = encodeURIComponent(title);
+            const encodedUrl = encodeURIComponent(url);
+
+            // シェア用URL
+            const shareUrls = {
+                x: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}&hashtags=NanoBananaPrompt`,
+                fb: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+                line: `https://social-plugins.line.me/lineit/share?url=${encodedUrl}`,
+                hatena: `https://b.hatena.ne.jp/entry/${url}` // はてブはエンコードなしの方が安定する場合があるが、基本はエンコード推奨。ここでは念のためシンプルに。
+            };
+
+            // ボタンコンテナを作成
+            const shareContainer = document.createElement('div');
+            shareContainer.className = 'share-container';
+
+            // ボタンのHTML（アイコンはテキスト絵文字で代用、またはSVG）
+            // ここではシンプルに絵文字と文字で表現
+            shareContainer.innerHTML = `
+                <a href="${shareUrls.x}" target="_blank" rel="noopener" class="share-btn share-x" aria-label="Xでシェア">𝕏</a>
+                <a href="${shareUrls.fb}" target="_blank" rel="noopener" class="share-btn share-fb" aria-label="Facebookでシェア">f</a>
+                <a href="${shareUrls.line}" target="_blank" rel="noopener" class="share-btn share-line" aria-label="LINEでシェア">L</a>
+                <a href="${shareUrls.hatena}" target="_blank" rel="noopener" class="share-btn share-hatena" aria-label="はてなブックマーク">B!</a>
+                <button class="share-btn share-copy" aria-label="リンクをコピー" data-url="${url}">🔗</button>
+            `;
+
+            // カードに追加
+            card.querySelector('.card-body').appendChild(shareContainer);
+        });
+
+        // リンクコピーボタンのイベントリスナー
+        document.querySelectorAll('.share-copy').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const url = btn.dataset.url;
+                navigator.clipboard.writeText(url).then(() => {
+                    const originalText = btn.textContent;
+                    btn.textContent = '✅';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+        });
+    }
+
     // --- ライトボックス（画像ポップアップ） ---
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');

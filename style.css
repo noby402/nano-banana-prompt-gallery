@@ -257,7 +257,7 @@ body {
   left: 0;
   right: 0;
   padding: 0.5rem;
-  background: linear-gradient(transparent, rgba(0,0,0,0.6));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
   color: #fff;
   font-size: 0.75rem;
   text-align: center;
@@ -365,6 +365,70 @@ body {
   background-color: #34C759;
 }
 
+/* --- シェアボタン --- */
+.share-container {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background-color: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-decoration: none;
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* 各SNSのブランドカラー */
+.share-x:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+[data-theme="dark"] .share-x:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.share-fb:hover {
+  background-color: #1877F2;
+}
+
+.share-line:hover {
+  background-color: #06C755;
+}
+
+.share-hatena:hover {
+  background-color: #00A4DE;
+}
+
+.share-copy:hover {
+  background-color: var(--text-secondary);
+}
+
+.share-copy.copied {
+  background-color: #34C759;
+  color: #fff;
+}
+
 /* --- ライトボックス（ポップアップ） --- */
 .lightbox {
   display: none;
@@ -401,6 +465,7 @@ body {
     transform: scale(0.85);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
