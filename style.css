@@ -457,18 +457,17 @@ body {
   border-radius: 8px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   cursor: default;
-  /* キビキビしたスピンイン (0.4s, 戻りなしの急停止) */
-  animation: lightboxSpinIn 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  animation: lightboxZoomIn 0.3s ease;
 }
 
-@keyframes lightboxSpinIn {
-  0% {
-    transform: scale(0) rotate(-360deg);
+@keyframes lightboxZoomIn {
+  from {
+    transform: scale(0.85);
     opacity: 0;
   }
 
-  100% {
-    transform: scale(1) rotate(0deg);
+  to {
+    transform: scale(1);
     opacity: 1;
   }
 }
